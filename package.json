@@ -10,7 +10,6 @@
     "test": "jest",
     "lint": "eslint src --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
-    "prepare": "npm run build",
     "dev": "vite",
     "build:playground": "vite build"
   },
