@@ -1,5 +1,5 @@
 {
-  "name": "react-audio-visualizer",
+  "name": "react-audio-visualizer-pro",
   "version": "0.1.0",
   "description": "Customizable React components for real-time audio visualization",
   "main": "dist/index.js",
@@ -49,10 +49,10 @@
     "frequency",
     "web audio api"
   ],
-  "author": "",
+  "author": "SujalXplores",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/SujalXplores/react-audio-visualizer"
+    "url": "https://github.com/SujalXplores/react-audio-visualizer-pro"
   }
 }

@@ -15,10 +15,10 @@
   
   <!-- Add badges here -->
   <p>
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/SujalXplores/react-audio-visualizer?style=social"/>
-    <img alt="GitHub forks" src="https://img.shields.io/github/forks/SujalXplores/react-audio-visualizer?style=social"/>
-    <img alt="GitHub issues" src="https://img.shields.io/github/issues/SujalXplores/react-audio-visualizer"/>
-    <img alt="GitHub license" src="https://img.shields.io/github/license/SujalXplores/react-audio-visualizer"/>
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/SujalXplores/react-audio-visualizer-pro?style=social"/>
+    <img alt="GitHub forks" src="https://img.shields.io/github/forks/SujalXplores/react-audio-visualizer-pro?style=social"/>
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues/SujalXplores/react-audio-visualizer-pro"/>
+    <img alt="GitHub license" src="https://img.shields.io/github/license/SujalXplores/react-audio-visualizer-pro"/>
   </p>
 </div>
 
@@ -35,9 +35,9 @@
 ## 🛠️ Installation
 
 ```bash
-npm install react-audio-visualizer
+npm install react-audio-visualizer-pro
 # or
-yarn add react-audio-visualizer
+yarn add react-audio-visualizer-pro
 ```
 
 ## Usage Examples
@@ -45,7 +45,7 @@ yarn add react-audio-visualizer
 ### Basic Audio File Visualization
 
 ```tsx
-import { WaveformVisualizer } from 'react-audio-visualizer';
+import { WaveformVisualizer } from 'react-audio-visualizer-pro';
 
 function App() {
   return (
@@ -63,7 +63,7 @@ function App() {
 ### Microphone Input with Frequency Bars
 
 ```tsx
-import { FrequencyVisualizer } from 'react-audio-visualizer';
+import { FrequencyVisualizer } from 'react-audio-visualizer-pro';
 
 function App() {
   return (
@@ -84,7 +84,7 @@ function App() {
 ### Circular Visualization with Custom Animation
 
 ```tsx
-import { CircularVisualizer } from 'react-audio-visualizer';
+import { CircularVisualizer } from 'react-audio-visualizer-pro';
 
 function App() {
   return (
