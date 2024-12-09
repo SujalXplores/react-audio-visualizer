@@ -12,7 +12,10 @@ const Container = styled.div<{ backgroundColor: string }>`
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: ${props => props.backgroundColor};
+  background: linear-gradient(180deg, ${props => props.backgroundColor} 0%, #16213e 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const WaveformVisualizer: React.FC<AudioVisualizerProps> = ({
@@ -52,8 +55,7 @@ export const WaveformVisualizer: React.FC<AudioVisualizerProps> = ({
     const dataArray = new Uint8Array(bufferLength);
     audioState.analyser.getByteTimeDomainData(dataArray);
 
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, width, height);
+    ctx.clearRect(0, 0, width, height);
 
     ctx.lineWidth = barWidth;
     ctx.strokeStyle = foregroundColor;
@@ -94,7 +96,7 @@ export const WaveformVisualizer: React.FC<AudioVisualizerProps> = ({
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [audioState]);
+  }, [audioState, width, height]);
 
   return (
     <Container backgroundColor={backgroundColor}>

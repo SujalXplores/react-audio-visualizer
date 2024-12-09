@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { WaveformVisualizer } from './WaveformVisualizer';
 import { FrequencyVisualizer } from './FrequencyVisualizer';
 import { CircularVisualizer } from './CircularVisualizer';
@@ -189,7 +189,6 @@ const Playground: React.FC = () => {
   const [useMicrophone, setUseMicrophone] = useState(false);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   
-  // New state for customization
   const [backgroundColor, setBackgroundColor] = useState('#1a1a2e');
   const [foregroundColor, setForegroundColor] = useState('#4CAF50');
   const [barWidth, setBarWidth] = useState(3);
@@ -206,10 +205,7 @@ const Playground: React.FC = () => {
   }, []);
 
   const audioUrl = useMemo(() => {
-    if (audioFile) {
-      return URL.createObjectURL(audioFile);
-    }
-    return '/sample-audio.mp3';
+    return audioFile ? URL.createObjectURL(audioFile) : '';
   }, [audioFile]);
 
   const commonProps = useMemo(() => ({
@@ -246,7 +242,7 @@ const Playground: React.FC = () => {
   }), [commonProps]);
 
   // Cleanup URL on unmount or when file changes
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (audioFile) {
         URL.revokeObjectURL(audioUrl);

@@ -12,7 +12,10 @@ const Container = styled.div<{ backgroundColor: string }>`
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: ${props => props.backgroundColor};
+  background: linear-gradient(180deg, ${props => props.backgroundColor} 0%, #16213e 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
@@ -32,24 +35,15 @@ export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
   maxDecibels = -10,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const audioState = useAudioContext(
-    audioUrl,
-    useMicrophone,
-    fftSize,
-    smoothingTimeConstant,
-    minDecibels,
-    maxDecibels
-  );
+  const audioState = useAudioContext(audioUrl, useMicrophone, fftSize, smoothingTimeConstant, minDecibels, maxDecibels);
   const animationFrameId = useRef<number | null>(null);
 
   const createGradient = (ctx: CanvasRenderingContext2D) => {
     if (!gradientColors || gradientColors.length < 2) return foregroundColor;
 
     const gradient = ctx.createLinearGradient(0, height, 0, 0);
-    const step = 1 / (gradientColors.length - 1);
-    
     gradientColors.forEach((color, index) => {
-      gradient.addColorStop(index * step, color);
+      gradient.addColorStop(index / (gradientColors.length - 1), color);
     });
 
     return gradient;
@@ -66,8 +60,7 @@ export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
     const dataArray = new Uint8Array(bufferLength);
     audioState.analyser.getByteFrequencyData(dataArray);
 
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, width, height);
+    ctx.clearRect(0, 0, width, height);
 
     const barCount = Math.min(bufferLength, Math.floor(width / (barWidth + barSpacing)));
     const totalWidth = barCount * (barWidth + barSpacing);
@@ -80,13 +73,7 @@ export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
       const x = startX + i * (barWidth + barSpacing);
       const y = height - barHeight;
 
-      if (barRadius > 0) {
-        ctx.beginPath();
-        ctx.roundRect(x, y, barWidth, barHeight, barRadius);
-        ctx.fill();
-      } else {
-        ctx.fillRect(x, y, barWidth, barHeight);
-      }
+      ctx.fillRect(x, y, barWidth, barHeight);
     }
 
     animationFrameId.current = requestAnimationFrame(draw);
@@ -105,7 +92,7 @@ export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [audioState]);
+  }, [audioState, width, height]);
 
   return (
     <Container backgroundColor={backgroundColor}>

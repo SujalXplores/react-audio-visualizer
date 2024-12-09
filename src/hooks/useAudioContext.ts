@@ -42,21 +42,27 @@ export const useAudioContext = (
         });
       } else if (audioUrl) {
         const response = await fetch(audioUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const arrayBuffer = await response.arrayBuffer();
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-        
-        const source = audioContext.createBufferSource();
-        source.buffer = audioBuffer;
-        source.connect(analyser);
-        analyser.connect(audioContext.destination);
-        source.start(0);
-        
-        setAudioState({
-          audioContext,
-          analyser,
-          dataArray,
-          source,
-        });
+        try {
+          const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+          const source = audioContext.createBufferSource();
+          source.buffer = audioBuffer;
+          source.connect(analyser);
+          analyser.connect(audioContext.destination);
+          source.start(0);
+  
+          setAudioState({
+            audioContext,
+            analyser,
+            dataArray,
+            source,
+          });
+        } catch (decodeError) {
+          console.error('Error decoding audio data:', decodeError);
+        }
       }
     } catch (error) {
       console.error('Error initializing audio context:', error);
@@ -65,6 +71,9 @@ export const useAudioContext = (
 
   const cleanup = useCallback(() => {
     if (audioState.source) {
+      if (audioState.source instanceof AudioBufferSourceNode) {
+        audioState.source.stop();
+      }
       audioState.source.disconnect();
     }
     if (audioState.analyser) {
@@ -77,8 +86,10 @@ export const useAudioContext = (
 
   useEffect(() => {
     initializeAudioContext();
-    return cleanup;
-  }, [initializeAudioContext, cleanup]);
+    return () => {
+      cleanup();
+    };
+  }, [initializeAudioContext]);
 
   return audioState;
 }; 

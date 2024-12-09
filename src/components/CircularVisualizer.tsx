@@ -12,7 +12,10 @@ const Container = styled.div<{ backgroundColor: string }>`
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: ${props => props.backgroundColor};
+  background: linear-gradient(180deg, ${props => props.backgroundColor} 0%, #16213e 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
@@ -32,29 +35,14 @@ export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
   animationSpeed = 1,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const audioState = useAudioContext(
-    audioUrl,
-    useMicrophone,
-    fftSize,
-    smoothingTimeConstant,
-    minDecibels,
-    maxDecibels
-  );
+  const audioState = useAudioContext(audioUrl, useMicrophone, fftSize, smoothingTimeConstant, minDecibels, maxDecibels);
   const animationFrameId = useRef<number | null>(null);
   const rotation = useRef(0);
 
   const createGradient = (ctx: CanvasRenderingContext2D, radius: number) => {
     if (!gradientColors || gradientColors.length < 2) return foregroundColor;
 
-    const gradient = ctx.createRadialGradient(
-      width / 2,
-      height / 2,
-      0,
-      width / 2,
-      height / 2,
-      radius
-    );
-
+    const gradient = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, radius);
     gradientColors.forEach((color, index) => {
       gradient.addColorStop(index / (gradientColors.length - 1), color);
     });
@@ -73,8 +61,7 @@ export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
     const dataArray = new Uint8Array(bufferLength);
     audioState.analyser.getByteFrequencyData(dataArray);
 
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(0, 0, width, height);
+    ctx.clearRect(0, 0, width, height);
 
     const centerX = width / 2;
     const centerY = height / 2;
@@ -127,7 +114,7 @@ export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
         cancelAnimationFrame(animationFrameId.current);
       }
     };
-  }, [audioState]);
+  }, [audioState, width, height]);
 
   return (
     <Container backgroundColor={backgroundColor}>
