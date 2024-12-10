@@ -1,6 +1,6 @@
 {
   "name": "react-audio-visualizer-pro",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Customizable React components for real-time audio visualization",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
