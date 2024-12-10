@@ -8,7 +8,7 @@ export const useAudioContext = (
   smoothingTimeConstant: number = 0.8,
   minDecibels: number = -90,
   maxDecibels: number = -10,
-) => {
+): AudioContextState => {
   const [audioState, setAudioState] = useState<AudioContextState>({
     audioContext: null,
     analyser: null,

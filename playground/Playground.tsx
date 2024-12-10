@@ -191,7 +191,19 @@ const initialState: State = {
   animationSpeed: 1,
 };
 
-function reducer(state: State, action: { type: string; payload: any }) {
+type Action =
+  | { type: "SET_VISUALIZER_TYPE"; payload: VisualizerType }
+  | { type: "SET_USE_MICROPHONE"; payload: boolean }
+  | { type: "SET_AUDIO_FILE"; payload: File | null }
+  | { type: "SET_BACKGROUND_COLOR"; payload: string }
+  | { type: "SET_FOREGROUND_COLOR"; payload: string }
+  | { type: "SET_BAR_WIDTH"; payload: number }
+  | { type: "SET_BAR_SPACING"; payload: number }
+  | { type: "SET_BAR_RADIUS"; payload: number }
+  | { type: "SET_SMOOTHING_TIME_CONSTANT"; payload: number }
+  | { type: "SET_ANIMATION_SPEED"; payload: number };
+
+function reducer(state: State, action: Action) {
   switch (action.type) {
     case "SET_VISUALIZER_TYPE":
       return { ...state, visualizerType: action.payload };

@@ -1,35 +1,25 @@
-export type VisualizerType = 'waveform' | 'frequency' | 'circular';
+export enum VisualizerType {
+  Waveform = 'waveform',
+  Frequency = 'frequency',
+  Circular = 'circular',
+}
 
 export interface AudioVisualizerProps {
-  // Audio source configuration
   audioUrl?: string;
   useMicrophone?: boolean;
-  
-  // Visualization type and configuration
-  type: VisualizerType;
   width?: number;
   height?: number;
-  
-  // Styling options
   backgroundColor?: string;
   foregroundColor?: string;
   gradientColors?: string[];
-  
-  // Bar configuration (for frequency and waveform)
   barWidth?: number;
   barSpacing?: number;
   barRadius?: number;
-  
-  // Animation configuration
   smoothingTimeConstant?: number;
   animationSpeed?: number;
-  
-  // Audio analysis configuration
   fftSize?: number;
   minDecibels?: number;
   maxDecibels?: number;
-  
-  // Callbacks
   onAudioLoad?: () => void;
   onAudioEnd?: () => void;
   onError?: (error: Error) => void;
