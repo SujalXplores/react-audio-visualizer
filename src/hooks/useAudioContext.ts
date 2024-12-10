@@ -33,16 +33,30 @@ export const useAudioContext = (
   };
 
   const handleAudioUrlInput = async (audioContext: AudioContext, analyser: AnalyserNode) => {
-    const response = await fetch(audioUrl!);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const arrayBuffer = await response.arrayBuffer();
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    const source = audioContext.createBufferSource();
-    source.buffer = audioBuffer;
-    source.connect(analyser);
-    analyser.connect(audioContext.destination);
-    source.start(0);
-    setAudioState({ audioContext, analyser, dataArray: new Uint8Array(analyser.frequencyBinCount), source });
+    if (!audioUrl) {
+      return;
+    }
+
+    try {
+      const response = await fetch(audioUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const contentType = response.headers.get('content-type');
+      if (!contentType || !contentType.includes('audio')) {
+        throw new Error(`Unsupported content type: ${contentType}`);
+      }
+      const arrayBuffer = await response.arrayBuffer();
+      const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      const source = audioContext.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+      source.start(0);
+      setAudioState({ audioContext, analyser, dataArray: new Uint8Array(analyser.frequencyBinCount), source });
+    } catch (error) {
+      console.error('Error handling audio URL input:', error);
+    }
   };
 
   const inputHandlers = {
