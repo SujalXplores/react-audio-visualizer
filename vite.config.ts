@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import terser from '@rollup/plugin-terser';
 
-// @ts-ignore - Temporary fix for Vite 6 type issues
 export default defineConfig({
-  plugins: [react({
-    jsxImportSource: '@emotion/react'
-  })],
+  plugins: [react(), terser()],
   root: 'playground',
   base: '/',
   build: {

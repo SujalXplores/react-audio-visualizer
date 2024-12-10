@@ -28,7 +28,6 @@ export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
   gradientColors = ['#00bcd4', '#4CAF50', '#8BC34A'],
   barWidth = 6,
   barSpacing = 2,
-  barRadius = 4,
   smoothingTimeConstant = 0.8,
   fftSize = 2048,
   minDecibels = -90,

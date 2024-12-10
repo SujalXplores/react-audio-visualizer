@@ -66,7 +66,7 @@ export const useAudioContext = (
 
   const initializeAudioContext = useCallback(async () => {
     try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
       const analyser = createAnalyser(audioContext);
 
       const inputType = useMicrophone ? 'microphone' : 'audioUrl';

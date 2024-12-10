@@ -27,7 +27,6 @@ export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
   foregroundColor = '#4CAF50',
   gradientColors = ['#00bcd4', '#4CAF50', '#8BC34A'],
   barWidth = 3,
-  barSpacing = 1,
   smoothingTimeConstant = 0.8,
   fftSize = 2048,
   minDecibels = -90,
