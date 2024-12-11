@@ -1,5 +1,4 @@
-<div align="center">
-  <h1>🎯 React Audio Visualizer</h1>
+  <h1>🎧 React Audio Visualizer</h1>
   
   <p>
     <strong>A customizable React package for real-time audio visualization, supporting multiple visualization types and audio sources</strong>
@@ -20,7 +19,6 @@
     <img alt="GitHub issues" src="https://img.shields.io/github/issues/SujalXplores/react-audio-visualizer-pro"/>
     <img alt="GitHub license" src="https://img.shields.io/github/license/SujalXplores/react-audio-visualizer-pro"/>
   </p>
-</div>
 
 ## ✨ Features
 
