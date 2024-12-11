@@ -10,7 +10,6 @@ export interface AudioVisualizerProps {
   width?: number;
   height?: number;
   backgroundColor?: string;
-  foregroundColor?: string;
   gradientColors?: string[];
   barWidth?: number;
   barSpacing?: number;

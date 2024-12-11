@@ -1,22 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { AudioVisualizerProps } from '../types';
 import { useAudioContext } from '../hooks/useAudioContext';
-import styled from '@emotion/styled';
-
-const Canvas = styled.canvas`
-  width: 100%;
-  height: 100%;
-`;
-
-const Container = styled.div<{ backgroundColor: string }>`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, ${props => props.backgroundColor} 0%, #16213e 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { Canvas, Container } from './StyledComponents';
+import { createGradient } from '@/utils';
 
 export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
   audioUrl,
@@ -24,7 +10,6 @@ export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
   width = 800,
   height = 200,
   backgroundColor = '#1a1a2e',
-  foregroundColor = '#4CAF50',
   gradientColors = ['#00bcd4', '#4CAF50', '#8BC34A'],
   barWidth = 6,
   barSpacing = 2,
@@ -36,17 +21,6 @@ export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioState = useAudioContext(audioUrl, useMicrophone, fftSize, smoothingTimeConstant, minDecibels, maxDecibels);
   const animationFrameId = useRef<number | null>(null);
-
-  const createGradient = (ctx: CanvasRenderingContext2D) => {
-    if (!gradientColors || gradientColors.length < 2) return foregroundColor;
-
-    const gradient = ctx.createLinearGradient(0, height, 0, 0);
-    gradientColors.forEach((color, index) => {
-      gradient.addColorStop(index / (gradientColors.length - 1), color);
-    });
-
-    return gradient;
-  };
 
   const draw = () => {
     if (!canvasRef.current || !audioState.analyser || !audioState.dataArray) return;
@@ -65,7 +39,7 @@ export const FrequencyVisualizer: React.FC<AudioVisualizerProps> = ({
     const totalWidth = barCount * (barWidth + barSpacing);
     const startX = (width - totalWidth) / 2;
 
-    ctx.fillStyle = createGradient(ctx);
+    ctx.fillStyle = createGradient(ctx, 'linear', gradientColors, width, height);
 
     for (let i = 0; i < barCount; i++) {
       const barHeight = (dataArray[i] / 255.0) * height;

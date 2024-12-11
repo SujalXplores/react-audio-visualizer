@@ -54,7 +54,6 @@ function App() {
       width={800}
       height={200}
       backgroundColor="#000000"
-      foregroundColor="#00ff00"
     />
   );
 }
@@ -93,7 +92,6 @@ function App() {
       width={800}
       height={800}
       backgroundColor="#000"
-      foregroundColor="#0ff"
       animationSpeed={1.5}
       barWidth={2}
     />
@@ -113,17 +111,16 @@ All visualizer components accept these common props:
 | useMicrophone | boolean | false | Use microphone input instead of audio file |
 | width | number | 800 | Canvas width in pixels |
 | height | number | 200 | Canvas height in pixels |
-| backgroundColor | string | '#000000' | Background color of the visualizer |
-| foregroundColor | string | '#00ff00' | Primary color for visualization |
-| gradientColors | string[] | undefined | Array of colors for gradient effect |
-| barWidth | number | varies | Width of visualization bars |
-| barSpacing | number | 1 | Spacing between bars |
+| backgroundColor | string | '#1a1a2e' | Background color of the visualizer |
+| gradientColors | string[] | ['#00bcd4', '#4CAF50', '#8BC34A'] | Array of colors for gradient effect |
+| barWidth | number | 3 | Width of visualization bars |
+| barSpacing | number | 2 | Spacing between bars (frequency only) |
 | barRadius | number | 0 | Border radius of bars (frequency only) |
 | smoothingTimeConstant | number | 0.8 | Audio analysis smoothing (0-1) |
 | fftSize | number | 2048 | FFT size for frequency analysis |
 | minDecibels | number | -90 | Minimum decibel value |
 | maxDecibels | number | -10 | Maximum decibel value |
-| animationSpeed | number | 1 | Animation speed multiplier |
+| animationSpeed | number | 1 | Animation speed multiplier (circular only) |
 
 ### Component-Specific Features
 

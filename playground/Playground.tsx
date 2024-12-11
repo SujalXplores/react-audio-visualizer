@@ -170,7 +170,6 @@ interface State {
   useMicrophone: boolean;
   audioFile: File | null;
   backgroundColor: string;
-  foregroundColor: string;
   barWidth: number;
   barSpacing: number;
   barRadius: number;
@@ -183,7 +182,6 @@ const initialState: State = {
   useMicrophone: false,
   audioFile: null,
   backgroundColor: "#1a1a2e",
-  foregroundColor: "#4CAF50",
   barWidth: 3,
   barSpacing: 1,
   barRadius: 4,
@@ -196,7 +194,6 @@ type Action =
   | { type: "SET_USE_MICROPHONE"; payload: boolean }
   | { type: "SET_AUDIO_FILE"; payload: File | null }
   | { type: "SET_BACKGROUND_COLOR"; payload: string }
-  | { type: "SET_FOREGROUND_COLOR"; payload: string }
   | { type: "SET_BAR_WIDTH"; payload: number }
   | { type: "SET_BAR_SPACING"; payload: number }
   | { type: "SET_BAR_RADIUS"; payload: number }
@@ -213,8 +210,6 @@ function reducer(state: State, action: Action) {
       return { ...state, audioFile: action.payload };
     case "SET_BACKGROUND_COLOR":
       return { ...state, backgroundColor: action.payload };
-    case "SET_FOREGROUND_COLOR":
-      return { ...state, foregroundColor: action.payload };
     case "SET_BAR_WIDTH":
       return { ...state, barWidth: action.payload };
     case "SET_BAR_SPACING":
@@ -254,8 +249,7 @@ const Playground: React.FC = () => {
       useMicrophone: state.useMicrophone,
       audioUrl: state.useMicrophone ? undefined : audioUrl,
       backgroundColor: state.backgroundColor,
-      foregroundColor: state.foregroundColor,
-      gradientColors: ["#00bcd4", state.foregroundColor, "#8BC34A"],
+      gradientColors: ["#00bcd4", "#8BC34A"],
       barWidth: state.barWidth,
       barSpacing: state.barSpacing,
       barRadius: state.barRadius,
@@ -319,17 +313,6 @@ const Playground: React.FC = () => {
                 })
               }
               title="Background Color"
-            />
-            <ColorInput
-              type="color"
-              value={state.foregroundColor}
-              onChange={(e) =>
-                dispatch({
-                  type: "SET_FOREGROUND_COLOR",
-                  payload: e.target.value,
-                })
-              }
-              title="Foreground Color"
             />
           </ColorInputContainer>
         </ControlGroup>

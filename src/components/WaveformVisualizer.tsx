@@ -1,22 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { AudioVisualizerProps } from '../types';
 import { useAudioContext } from '../hooks/useAudioContext';
-import styled from '@emotion/styled';
-
-const Canvas = styled.canvas`
-  width: 100%;
-  height: 100%;
-`;
-
-const Container = styled.div<{ backgroundColor: string }>`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, ${props => props.backgroundColor} 0%, #16213e 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { createGradient } from '../utils';
+import { Canvas, Container } from './StyledComponents';
 
 export const WaveformVisualizer: React.FC<AudioVisualizerProps> = ({
   audioUrl,
@@ -24,7 +10,7 @@ export const WaveformVisualizer: React.FC<AudioVisualizerProps> = ({
   width = 800,
   height = 200,
   backgroundColor = '#1a1a2e',
-  foregroundColor = '#4CAF50',
+  gradientColors = ['#00bcd4', '#4CAF50', '#8BC34A'],
   barWidth = 3,
   smoothingTimeConstant = 0.8,
   fftSize = 2048,
@@ -56,7 +42,7 @@ export const WaveformVisualizer: React.FC<AudioVisualizerProps> = ({
     ctx.clearRect(0, 0, width, height);
 
     ctx.lineWidth = barWidth;
-    ctx.strokeStyle = foregroundColor;
+    ctx.strokeStyle = createGradient(ctx, 'linear', gradientColors, width, height);
     ctx.beginPath();
 
     const sliceWidth = (width * 1.0) / bufferLength;

@@ -1,22 +1,8 @@
 import React, { useRef, useEffect } from 'react';
 import { AudioVisualizerProps } from '../types';
 import { useAudioContext } from '../hooks/useAudioContext';
-import styled from '@emotion/styled';
-
-const Canvas = styled.canvas`
-  width: 100%;
-  height: 100%;
-`;
-
-const Container = styled.div<{ backgroundColor: string }>`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(180deg, ${props => props.backgroundColor} 0%, #16213e 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import { createGradient } from '../utils';
+import { Canvas, Container } from './StyledComponents';
 
 export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
   audioUrl,
@@ -24,7 +10,6 @@ export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
   width = 800,
   height = 800,
   backgroundColor = '#1a1a2e',
-  foregroundColor = '#4CAF50',
   gradientColors = ['#00bcd4', '#4CAF50', '#8BC34A'],
   barWidth = 3,
   smoothingTimeConstant = 0.8,
@@ -37,17 +22,6 @@ export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
   const audioState = useAudioContext(audioUrl, useMicrophone, fftSize, smoothingTimeConstant, minDecibels, maxDecibels);
   const animationFrameId = useRef<number | null>(null);
   const rotation = useRef(0);
-
-  const createGradient = (ctx: CanvasRenderingContext2D, radius: number) => {
-    if (!gradientColors || gradientColors.length < 2) return foregroundColor;
-
-    const gradient = ctx.createRadialGradient(width / 2, height / 2, 0, width / 2, height / 2, radius);
-    gradientColors.forEach((color, index) => {
-      gradient.addColorStop(index / (gradientColors.length - 1), color);
-    });
-
-    return gradient;
-  };
 
   const draw = () => {
     if (!canvasRef.current || !audioState.analyser || !audioState.dataArray) return;
@@ -87,7 +61,7 @@ export const CircularVisualizer: React.FC<AudioVisualizerProps> = ({
       const x2 = Math.cos(angle) * (radius + barHeight);
       const y2 = Math.sin(angle) * (radius + barHeight);
 
-      ctx.strokeStyle = createGradient(ctx, radius + barHeight);
+      ctx.strokeStyle = createGradient(ctx, 'radial', gradientColors, width, height, radius + barHeight);
       ctx.lineWidth = barWidth;
       ctx.beginPath();
       ctx.moveTo(x1, y1);
