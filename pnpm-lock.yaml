@@ -12,10 +12,10 @@ importers:
         specifier: 11.14.0
         version: 11.14.0(@emotion/react@11.13.5(@types/react@19.0.1)(react@19.0.0))(@types/react@19.0.1)(react@19.0.0)
       react:
-        specifier: '>=19.0.0'
+        specifier: 17.x || 18.x || 19.x
         version: 19.0.0
       react-dom:
-        specifier: '>=19.0.0'
+        specifier: 17.x || 18.x || 19.x
         version: 19.0.0(react@19.0.0)
       tslib:
         specifier: 2.8.1
