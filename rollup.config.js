@@ -1,7 +1,9 @@
-const typescript = require('rollup-plugin-typescript2');
+import typescript from 'rollup-plugin-typescript2';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const pkg = require('./package.json');
 
-module.exports = {
+export default {
   input: 'src/index.ts',
   output: [
     {
@@ -20,7 +22,6 @@ module.exports = {
   external: [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})],
   plugins: [
     typescript({
-      typescript: require('typescript'),
       tsconfigDefaults: {
         compilerOptions: {
           importHelpers: true,
